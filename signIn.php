@@ -53,6 +53,9 @@ if (!isset($_SESSION)) {
 
 <div class="wrapper">
 	<nav id="topbar" class="navbar navbar-expand">
+		<button type="button" id="sidebarCollapse" class="btn btn-info" onclick="this.blur();">
+			<i class="fas fa-align-left"></i>
+		</button>
         <?php
         if (isset($_SESSION['isSignedIn']) AND $_SESSION['isSignedIn'] === TRUE) {
             echo '<div class="navbar-collapse collapse">
@@ -91,7 +94,7 @@ if (!isset($_SESSION)) {
 	<!-- Sidebar Holder -->
 	<nav id="sidebar" class="">
 		<div class="sidebar-header text-center">
-			<a href="index.php"><img id="mainLogo" src="img/linemaster.svg" alt=""></a>
+			<a href="index.php"><img id="mainLogo" src="img/linemasterwhite.png" alt=""></a>
 		</div>
 
         <?php
@@ -130,13 +133,9 @@ if (!isset($_SESSION)) {
 
 	<!-- Page Content Holder -->
 	<div id="content">
-		<button type="button" id="sidebarCollapse" class="btn btn-info">
-			<i class="fas fa-align-left"></i>
-		</button>
 		<div id="contentContainer" class="text-center">
-
-
 			<form method="post" action="php/submitEmployee.php">
+				<h1 class="text-left">Sign In</h1>
 				<div class="form-row">
 					<div class="col-6 text-left">
 						<label for="empNum" id="empNumLabel">Employee Number</label>
@@ -218,7 +217,7 @@ if (!isset($_SESSION)) {
         $('#empNum').select2({});
     });
 </script>
-<script>  $(document).ready(function() {
+<script>  $(document).ready(function () {
         $("#empNum").select2({
             selectOnClose: true
         });

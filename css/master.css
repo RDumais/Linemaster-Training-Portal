@@ -309,7 +309,6 @@ padding:10px;
 
 #navbarNavDropdown{
     margin-left: auto !important;
-    padding-right: 140px !important;
 }
 #topbar > div{
     height:40px !important;
@@ -327,4 +326,18 @@ padding:10px;
     -moz-border-radius: 50%;
     border-radius: 50%;
     background-color: #95a4e6;
+}
+
+#sidebarCollapse{
+    left: 0;
+    position: absolute;
+    background-color: #7386d5;
+    border-color: #7386d5;
+}
+
+.highlight{
+    border-color: #28a745;
+    -webkit-box-shadow: 0 0 5px #28a745;
+    -moz-box-shadow: 0 0 5px blue;
+    box-shadow: 0 0 29px #28a745;
 }

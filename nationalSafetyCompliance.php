@@ -24,6 +24,9 @@ session_start();
 
 <div class="wrapper">
 	<nav id="topbar" class="navbar navbar-expand">
+		<button type="button" id="sidebarCollapse" class="btn btn-info" onclick="this.blur();">
+			<i class="fas fa-align-left"></i>
+		</button>
         <?php
         if (isset($_SESSION['isSignedIn']) AND $_SESSION['isSignedIn'] === TRUE) {
             echo '<div class="navbar-collapse collapse">
@@ -62,7 +65,7 @@ session_start();
 	</nav>
 	<nav id="sidebar" class="">
 		<div class="sidebar-header text-center">
-			<a href="index.php"><img id="mainLogo" src="img/linemaster.svg" alt=""></a>
+			<a href="index.php"><img id="mainLogo" src="img/linemasterwhite.png" alt=""></a>
 		</div>
 
         <?php
@@ -101,9 +104,9 @@ session_start();
 
 	<!-- Page Content Holder -->
 	<div id="content">
-		<button type="button" id="sidebarCollapse" class="btn btn-info">
-			<i class="fas fa-align-left"></i>
-		</button>
+<!--		<button type="button" id="sidebarCollapse" class="btn btn-info">-->
+<!--			<i class="fas fa-align-left"></i>-->
+<!--		</button>-->
 		<div id="videoContainer">
 			<h2>National Safety Compliance - <span id="videoLength"></span></h2>
 			<h4>Back Safety</h4>
@@ -133,7 +136,7 @@ session_start();
 				mollit
 				anim id est laborum.</p>
 			<div class="row">
-				<div class="col-md-12 text-right"><a href="index.php">
+				<div class="col-md-12 text-right"><a href="completed.php">
 						<button type="button" class="btn btn-primary btn-lg">Mark Completed</button>
 					</a></div>
 			</div>

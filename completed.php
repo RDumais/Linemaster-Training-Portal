@@ -132,24 +132,8 @@ if ($conn === false) {
 	<div id="content">
         <?php
         if (isset($_SESSION['isSignedIn']) AND $_SESSION['isSignedIn'] === TRUE) {
-            echo '<h1 class="text-center">Hi <span class="variableHolder">'.$_SESSION['empFirstName'].'</span>, you have
-		training to complete.</h1>
+            echo '<h1 class="text-center">Hi <span class="variableHolder">'.$_SESSION['empFirstName'].'</span>, you are all caught up!</h1>
 		<div id="contentContainer" class="text-center row">
-			<div class="col-lg-6">
-				<div class="card border-danger">
-					<div class="card-header">
-						Training Required
-					</div>
-					<div class="card-body">
-						<div class="card">
-							<ul class="list-group list-group-flush">
-								<li class="list-group-item"><a href="nationalSafetyCompliance.php">Back Safety - 00:12:31</a></li>
-							</ul>
-						</div>
-						<a href="nationalSafetyCompliance.php" class="btn btn-danger">Go to training</a>
-					</div>
-				</div>
-			</div>
 			<div class="col-lg-6">
 				<div class="card border-success">
 					<div class="card-header">
@@ -161,6 +145,7 @@ if ($conn === false) {
 								<li class="list-group-item"><a href="#">Completed Training #1 - 0:11:22</a></li>
 								<li class="list-group-item"><a href="#">Completed Training #2 - 0:17:39</a></li>
 								<li class="list-group-item"><a href="#">Completed Training #3 - 0:29:11</a></li>
+								<li id="newestCompleted" class="list-group-item"><a href="#">Back Safety - 00:12:31</a></li>
 							</ul>
 						</div>
 						<a href="#" class="btn btn-success">Go to completed</a>
@@ -187,5 +172,14 @@ if ($conn === false) {
 		crossorigin="anonymous"></script>
 <script src="js/sidebarToggle.js"></script>
 <script src="js/initials.js"></script>
+<script>
+	var glower = $('#newestCompleted');
+    window.setTimeout(function() {
+        glower.toggleClass('highlight');
+    }, 200);
+
+    window.setTimeout(function() {
+        glower.toggleClass('highlight');
+    }, 1500);</script>
 </body>
 </html>
