@@ -19,7 +19,12 @@ if (!isset($_SESSION)) {
     }
 
 //Reformat the name from the original database table, gather results
-    $getEmpNumSTMT = "SELECT DISTINCT emp_num from employee_mst ORDER BY emp_num ASC";
+    $getEmpNumSTMT = "SELECT DISTINCT
+					   emp_num
+						FROM employee_mst
+						WHERE term_date IS NULL AND hire_date IS NOT NULL
+						ORDER BY emp_num ASC
+";
     $getEmpNumEXEC = sqlsrv_query($conn, $getEmpNumSTMT);
 }
 
@@ -59,7 +64,7 @@ if (!isset($_SESSION)) {
 				<ul class="navbar-nav">
 					<li class="nav-item dropdown">
 						<a class="nav-link " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-						   aria-haspopup="true" aria-expanded="false">' . $_SESSION['empName'] . '
+						   aria-haspopup="true" aria-expanded="false"><div id="initialHolder"></div><span id="empNameHolder">' . $_SESSION['empName'] . '</span>
                     
                 </a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -75,7 +80,7 @@ if (!isset($_SESSION)) {
 			<div class="" id="navbarNavDropdown">
 				<ul class="navbar-nav">
 					<li class="nav-item dropdown">
-						<a class="nav-link" href="signIn.php" id="navbarDropdownMenuLink"> Sign in</a>
+						<a class="nav-link" href="signIn.php" id="navbarDropdownMenuLink">Sign in</a>
 					</li>
 				</ul>
 			</div>
@@ -135,7 +140,7 @@ if (!isset($_SESSION)) {
 				<div class="form-row">
 					<div class="col-6 text-left">
 						<label for="empNum" id="empNumLabel">Employee Number</label>
-						<select id="empNum" class="form-control" name="empNum" tabindex="6">
+						<select id="empNum" class="form-control" name="empNum" tabindex="1">
 							<option></option>
                             <?php
 
@@ -149,7 +154,7 @@ if (!isset($_SESSION)) {
 					<div class="col-6 text-left">
 						<label for="empPin" class="">Employee Pin</label>
 						<input type="password" class="form-control" name="empPin" id="empPin" minlength="4"
-							   maxlength="4" size="4">
+							   maxlength="4" size="4" tabindex="2">
 					</div>
 				</div>
 				<div id="employeeConfirmation">
@@ -213,6 +218,11 @@ if (!isset($_SESSION)) {
         $('#empNum').select2({});
     });
 </script>
-
+<script>  $(document).ready(function() {
+        $("#empNum").select2({
+            selectOnClose: true
+        });
+    });</script>
+<script src="js/initials.js"></script>
 </body>
 </html>

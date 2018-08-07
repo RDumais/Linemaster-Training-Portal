@@ -61,7 +61,7 @@ if ($conn === false) {
 				<ul class="navbar-nav">
 					<li class="nav-item dropdown">
 						<a class="nav-link " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-						   aria-haspopup="true" aria-expanded="false">' . $_SESSION['empName'] . '
+						   aria-haspopup="true" aria-expanded="false"><div id="initialHolder"></div><span id="empNameHolder">' . $_SESSION['empName'] . '</span>
                     
                 </a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -77,7 +77,7 @@ if ($conn === false) {
 			<div class="" id="navbarNavDropdown">
 				<ul class="navbar-nav">
 					<li class="nav-item dropdown">
-						<a class="nav-link" href="signIn.php" id="navbarDropdownMenuLink"> Sign in</a>
+						<a class="nav-link" href="signIn.php" id="navbarDropdownMenuLink">Sign in</a>
 
 					</li>
 				</ul>
@@ -186,5 +186,6 @@ if ($conn === false) {
 		integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
 		crossorigin="anonymous"></script>
 <script src="js/sidebarToggle.js"></script>
+<script src="js/initials.js"></script>
 </body>
 </html>

@@ -35,7 +35,7 @@ session_start();
 				<ul class="navbar-nav">
 					<li class="nav-item dropdown">
 						<a class="nav-link " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-						   aria-haspopup="true" aria-expanded="false">' . $_SESSION['empName'] . '
+						   aria-haspopup="true" aria-expanded="false"><div id="initialHolder"></div><span id="empNameHolder">' . $_SESSION['empName'] . '</span>
                     
                 </a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -51,7 +51,7 @@ session_start();
 			<div class="" id="navbarNavDropdown">
 				<ul class="navbar-nav">
 					<li class="nav-item dropdown">
-						<a class="nav-link" href="signIn.php" id="navbarDropdownMenuLink"> Sign in</a>
+						<a class="nav-link" href="signIn.php" id="navbarDropdownMenuLink">Sign in</a>
 
 					</li>
 				</ul>
@@ -187,6 +187,6 @@ session_start();
     });
 
 </script>
-
+<script src="js/initials.js"></script>
 </body>
 </html>
