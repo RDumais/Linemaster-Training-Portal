@@ -1,4 +1,5 @@
 <?php
+session_name("EmployeeOnboardingPortal");
 session_start();
 ?>
 
@@ -73,16 +74,22 @@ session_start();
             echo '<ul class="list-unstyled components">
 			<li>
 				<a href="#safetySubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle collapsed">Training
-					Required <span class="badge badge-danger">1</span></a>
+					Required <span class="badge badge-danger">3</span></a>
 				<ul class="list-unstyled collapse" id="safetySubmenu" style="">
 					<li>
-						<a href="nationalSafetyCompliance.php">Back Safety</a>
+						<a href="backSafety.php">Back Safety</a>
 					</li>
+					<li>
+						<a href="prevSexHarassForEmps.php">Preventing Sexual Harassment</a>
+					</li>
+					<li>
+						<a href="hazComChemicalLabels.php">Hazard Chemical Labels</a>
+					</li>					
 				</ul>
 			</li>
 			<li>
 				<a href="#workplaceSubmenu" data-toggle="collapse" aria-expanded="false"
-				   class="dropdown-toggle collapsed">Training Completed <span class="badge badge-success">3</span></a>
+				   class="dropdown-toggle collapsed">Training Completed</a>
 				<ul class="list-unstyled collapse" id="workplaceSubmenu" style="">
 					<li>
 						<a href="#">Completed Training #1</a>
@@ -104,16 +111,13 @@ session_start();
 
 	<!-- Page Content Holder -->
 	<div id="content">
-<!--		<button type="button" id="sidebarCollapse" class="btn btn-info">-->
-<!--			<i class="fas fa-align-left"></i>-->
-<!--		</button>-->
 		<div id="videoContainer">
 			<h2>National Safety Compliance - <span id="videoLength"></span></h2>
-			<h4>Back Safety</h4>
+			<h4>Hazard Communication Chemical Labels</h4>
 			<video id="my-video" class="video-js vjs-fluid" controls preload="auto"
 				   poster="img/poster.jpg" data-setup="{}">
-				<source src="videos/NationalSafetyCompliance.mp4" type='video/mp4'>
-				<source src="videos/NationalSafetyCompliance.mp4" type='video/webm'>
+				<source src="videos/hazComChemicalLabels.mp4" type='video/mp4'>
+				<source src="videos/hazComChemicalLabels.mp4" type='video/webm'>
 				<p class="vjs-no-js">
 					To view this video please enable JavaScript, and consider upgrading to a web browser that
 					<a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
@@ -137,7 +141,7 @@ session_start();
 				anim id est laborum.</p>
 			<div class="row">
 				<div class="col-md-12 text-right"><a href="completed.php">
-						<button type="button" class="btn btn-primary btn-lg">Mark Completed</button>
+						<button id="completedBtn" type="button" class="btn btn-primary btn-lg" disabled>Mark Completed</button>
 					</a></div>
 			</div>
 			<div class="line"></div>
@@ -191,5 +195,6 @@ session_start();
 
 </script>
 <script src="js/initials.js"></script>
+<script src="js/videoEnded.js"></script>
 </body>
 </html>

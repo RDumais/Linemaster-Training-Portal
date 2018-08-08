@@ -1,5 +1,6 @@
 <?php
 //Start the session for the visitor
+session_name("EmployeeOnboardingPortal");
 session_start();
 
 if (!isset($_SESSION['isSignedIn']) OR $_SESSION['isSignedIn'] === FALSE) {
@@ -99,16 +100,22 @@ if ($conn === false) {
             echo '<ul class="list-unstyled components">
 			<li>
 				<a href="#safetySubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle collapsed">Training
-					Required <span class="badge badge-danger">1</span></a>
+					Required <span class="badge badge-danger">3</span></a>
 				<ul class="list-unstyled collapse" id="safetySubmenu" style="">
 					<li>
-						<a href="nationalSafetyCompliance.php">Back Safety</a>
+						<a href="backSafety.php">Back Safety</a>
 					</li>
+					<li>
+						<a href="prevSexHarassForEmps.php">Preventing Sexual Harassment</a>
+					</li>
+					<li>
+						<a href="hazComChemicalLabels.php">Hazard Chemical Labels</a>
+					</li>					
 				</ul>
 			</li>
 			<li>
 				<a href="#workplaceSubmenu" data-toggle="collapse" aria-expanded="false"
-				   class="dropdown-toggle collapsed">Training Completed <span class="badge badge-success">3</span></a>
+				   class="dropdown-toggle collapsed">Training Completed</a>
 				<ul class="list-unstyled collapse" id="workplaceSubmenu" style="">
 					<li>
 						<a href="#">Completed Training #1</a>
@@ -143,10 +150,12 @@ if ($conn === false) {
 					<div class="card-body">
 						<div class="card">
 							<ul class="list-group list-group-flush">
-								<li class="list-group-item"><a href="nationalSafetyCompliance.php">Back Safety - 00:12:31</a></li>
+								<li class="list-group-item"><a href="backSafety.php">Back Safety - 12:31</a></li>
+								<li class="list-group-item"><a href="prevSexHarassForEmps.php">Preventing Sexual Harassment for Employees - 15:36</a></li>
+								<li class="list-group-item"><a href="hazComChemicalLabels.php">Hazard Communication Chemical Labels - 13:47</a></li>
 							</ul>
 						</div>
-						<a href="nationalSafetyCompliance.php" class="btn btn-danger">Go to training</a>
+						<a href="backSafety.php" class="btn btn-danger">Go to training</a>
 					</div>
 				</div>
 			</div>
@@ -158,9 +167,9 @@ if ($conn === false) {
 					<div class="card-body">
 						<div class="card">
 							<ul class="list-group list-group-flush">
-								<li class="list-group-item"><a href="#">Completed Training #1 - 0:11:22</a></li>
-								<li class="list-group-item"><a href="#">Completed Training #2 - 0:17:39</a></li>
-								<li class="list-group-item"><a href="#">Completed Training #3 - 0:29:11</a></li>
+								<li class="list-group-item"><a href="#">Completed Training #1 - 11:22</a></li>
+								<li class="list-group-item"><a href="#">Completed Training #2 - 17:39</a></li>
+								<li class="list-group-item"><a href="#">Completed Training #3 - 29:11</a></li>
 							</ul>
 						</div>
 						<a href="#" class="btn btn-success">Go to completed</a>

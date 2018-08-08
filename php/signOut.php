@@ -9,6 +9,7 @@
  */
 
 //Kills the visitor's session and any saved variable data
+session_name("EmployeeOnboardingPortal");
 session_start();
 session_unset();
 session_destroy();
