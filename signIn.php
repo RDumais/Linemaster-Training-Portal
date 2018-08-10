@@ -50,12 +50,12 @@ if (!isset($_SESSION)) {
 
 </head>
 
-<body data-gr-c-s-loaded="true">
+<body>
 
 <div class="wrapper">
 	<nav id="topbar" class="navbar navbar-expand">
 		<button type="button" id="sidebarCollapse" class="btn btn-info" onclick="this.blur();">
-			<i class="fas fa-align-left"></i>
+			<i class="fas fa-align-left text-shadow"></i>
 		</button>
         <?php
         if (isset($_SESSION['isSignedIn']) AND $_SESSION['isSignedIn'] === TRUE) {
@@ -66,9 +66,9 @@ if (!isset($_SESSION)) {
 			</button>
 			<div class="" id="navbarNavDropdown">
 				<ul class="navbar-nav">
-					<li class="nav-item dropdown">
+					<li id="navEmpConfig" class="nav-item dropdown">
 						<a class="nav-link " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-						   aria-haspopup="true" aria-expanded="false"><div id="initialHolder"></div><span id="empNameHolder">' . $_SESSION['empName'] . '</span>
+						   aria-haspopup="true" aria-expanded="false"><span id="empNameHolder" class="text-shadow"><i class="fas fa-chevron-down"></i>' . $_SESSION['empName'] . '</span>
                     
                 </a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -83,7 +83,7 @@ if (!isset($_SESSION)) {
             echo '<div class="navbar-collapse">
 			<div class="" id="navbarNavDropdown">
 				<ul class="navbar-nav">
-					<li class="nav-item dropdown">
+					<li id="navEmpConfig" class="nav-item dropdown">
 						<a class="nav-link" href="signIn.php" id="navbarDropdownMenuLink">Sign in</a>
 					</li>
 				</ul>
@@ -102,9 +102,9 @@ if (!isset($_SESSION)) {
         if (isset($_SESSION['isSignedIn']) AND $_SESSION['isSignedIn'] === TRUE) {
             echo '<ul class="list-unstyled components">
 			<li>
-				<a href="#safetySubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle collapsed">Training
-					Required <span class="badge badge-danger">3</span></a>
-				<ul class="list-unstyled collapse" id="safetySubmenu" style="">
+				<a href="#requiredTrainingSubmenu" id="requiredTrainingMenu" class="text-shadow text-uppercase" data-toggle="collapse" aria-expanded="true"class="dropdown-toggle collapsed">Training
+					Required <span class="badge badge-danger">3</span><i class="fas fa-chevron-circle-up"></i></a>
+				<ul class="list-unstyled collapse show" id="requiredTrainingSubmenu" style="">
 					<li>
 						<a href="backSafety.php">Back Safety</a>
 					</li>
@@ -117,9 +117,9 @@ if (!isset($_SESSION)) {
 				</ul>
 			</li>
 			<li>
-				<a href="#workplaceSubmenu" data-toggle="collapse" aria-expanded="false"
-				   class="dropdown-toggle collapsed">Training Completed</a>
-				<ul class="list-unstyled collapse" id="workplaceSubmenu" style="">
+				<a href="#completedTrainingSubmenu" id="completedTrainingMenu" class="text-shadow text-uppercase" data-toggle="collapse" aria-expanded="false"
+				   class="dropdown-toggle collapsed">Training Completed<i class="fas fa-chevron-circle-down"></i></a>
+				<ul class="list-unstyled collapse" id="completedTrainingSubmenu" style="">
 					<li>
 						<a href="#">Completed Training #1</a>
 					</li>
@@ -141,8 +141,8 @@ if (!isset($_SESSION)) {
 	<!-- Page Content Holder -->
 	<div id="content">
 		<div id="contentContainer" class="text-center">
-			<form method="post" action="php/submitEmployee.php">
-				<h1 class="text-left">Sign In</h1>
+			<form id="signInForm" method="post" action="php/submitEmployee.php" class="box-shadow border-top-blue">
+
 				<div class="form-row">
 					<div class="col-6 text-left">
 						<label for="empNum" id="empNumLabel">Employee Number</label>
@@ -158,7 +158,7 @@ if (!isset($_SESSION)) {
 						</select>
 					</div>
 					<div class="col-6 text-left">
-						<label for="empPin" class="">Employee Pin</label>
+						<label id="empPinLabel" for="empPin" class="">Employee Pin</label>
 						<input type="password" class="form-control" name="empPin" id="empPin" minlength="4"
 							   maxlength="4" size="4" tabindex="2">
 					</div>
@@ -191,8 +191,8 @@ if (!isset($_SESSION)) {
 <script>
 
     //Listen for keyups to tell if the visitor is finished typing
-    var typingTimer;
-    var doneTypingInterval = 1000;
+    let typingTimer;
+    const doneTypingInterval = 1000;
 
     $('#empPin').keyup(function () {
         clearTimeout(typingTimer);
@@ -204,7 +204,7 @@ if (!isset($_SESSION)) {
     //Make AJAX call to see if the visitor previously visited, if not prompt the visitor to sign in
     function findEmployee() {
 
-        var empNum = $('.select2-selection__rendered').text();
+        const empNum = $('.select2-selection__rendered').text();
         $.ajax({
             type: "POST",
             url: "php/findEmployee.php",
@@ -213,7 +213,9 @@ if (!isset($_SESSION)) {
             },
             success: function (data) {
                 $("#employeeConfirmation").html(data);
-                $("#submitEmpNum").removeAttr('disabled');
+                if ($("#empNum").val().length > 0 ) {
+                    $("#submitEmpNum").removeAttr('disabled');
+                }
             }
         });
 
@@ -230,5 +232,6 @@ if (!isset($_SESSION)) {
         });
     });</script>
 <script src="js/initials.js"></script>
+<script src="js/chevronHandler.js"></script>
 </body>
 </html>

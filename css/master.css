@@ -1,8 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Merriweather+Sans');
+@import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700');
 
-@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 body {
+    font-family: 'Merriweather Sans', sans-serif;
+    background: #A9D3FF;
+    color: #0B3C49;
+}
+
+input{
     font-family: 'Poppins', sans-serif;
-    background: #fafafa;
 }
 
 p {
@@ -10,7 +16,6 @@ p {
     font-size: 1.1em;
     font-weight: 300;
     line-height: 1.7em;
-    color: #999;
 }
 
 a,
@@ -75,7 +80,6 @@ a:focus {
 
 #sidebar ul.components {
     padding: 20px 0;
-    border-bottom: 1px solid #47748b;
 }
 
 #sidebar ul p {
@@ -97,7 +101,6 @@ a:focus {
 #sidebar ul li.active>a,
 a[aria-expanded="true"] {
     color: #fff;
-    background: #6d7fcc;
 }
 
 a[data-toggle="collapse"] {
@@ -148,7 +151,7 @@ a.article:hover {
 #content {
     width: calc(100% - 250px);
     height: calc(100% - 40px);
-    padding: 60px 20px;
+    padding: 40px 20px;
     min-height: 100vh;
     transition: all 0.3s;
     position: absolute;
@@ -209,7 +212,12 @@ a.article:hover {
     height: 100%;
     max-height: 1200px;
     margin: 0 auto;
+    padding: 20px 0px;
 }
+#trainingVideo{
+    margin: 20px 0px !important;
+}
+
 .plyr {
     border-radius: 4px;
     margin-bottom: 15px;
@@ -242,7 +250,7 @@ form{
     max-width: 400px;
     min-width: 400px;
     padding: 20px 25px;
-    background-color: #ececec;
+    background-color: #BEE3DB;
 }
 
 #employeeConfirmation{
@@ -337,4 +345,60 @@ padding:10px;
     -webkit-box-shadow: 0 0 5px #28a745;
     -moz-box-shadow: 0 0 5px blue;
     box-shadow: 0 0 29px #28a745;
+}
+
+.text-shadow{
+    text-shadow: 0 1px 2px rgba(0,0,0,0.20);
+}
+
+#requiredTrainingSubmenu li, #completedTrainingSubmenu li{
+    text-shadow: 0 1px 2px rgba(0,0,0,0.20);
+}
+
+.btn:hover{
+    transform: translateY(-1px);
+}
+.box-shadow{
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.18);
+}
+
+.select2-container--default .select2-selection--single{
+    border: 1px solid #7386d5 !important;
+}
+#empPin{
+    border: 1px solid #7386d5;
+}
+
+.fa-chevron-circle-down, .fa-chevron-circle-up, .fa-chevron-down, .fa-chevron-up{
+    float:right;
+}
+#empNameHolder > i{
+    padding-left: 10px;
+}
+
+.border-top-blue{
+    border-top: 5px solid #7386d5;
+}
+.border-top-danger{
+    border-top: 5px solid #dc3545;
+}
+.border-top-success{
+    border-top: 5px solid #28a745;
+}
+#empNumLabel,#empPinLabel{
+    color: #7386d5;
+}
+
+#cardHolder{
+    width: 100%;
+    background-color: #BEE3DB;
+}
+
+#welcomeText{
+    margin-right: auto;
+    margin-left: auto;
+    padding-top: 50px;
+}
+.select2-selection__arrow> b {
+    border-color: #7386d5 transparent transparent transparent !important;
 }

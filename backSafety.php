@@ -8,25 +8,21 @@ session_start();
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-
 	<title>Linemaster Video Training</title>
 	<link rel="icon" type="image/x-icon" href="img/favicon.ico">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
 		  integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://vjs.zencdn.net/7.1.0/video-js.css">
 	<link rel="stylesheet" href="css/master.css">
-
-
 </head>
 
-<body data-gr-c-s-loaded="true">
+<body>
 
 <div class="wrapper">
 	<nav id="topbar" class="navbar navbar-expand">
 		<button type="button" id="sidebarCollapse" class="btn btn-info" onclick="this.blur();">
-			<i class="fas fa-align-left"></i>
+			<i class="fas fa-align-left text-shadow"></i>
 		</button>
         <?php
         if (isset($_SESSION['isSignedIn']) AND $_SESSION['isSignedIn'] === TRUE) {
@@ -37,9 +33,9 @@ session_start();
 			</button>
 			<div class="" id="navbarNavDropdown">
 				<ul class="navbar-nav">
-					<li class="nav-item dropdown">
+					<li id="navEmpConfig" class="nav-item dropdown">
 						<a class="nav-link " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-						   aria-haspopup="true" aria-expanded="false"><div id="initialHolder"></div><span id="empNameHolder">' . $_SESSION['empName'] . '</span>
+						   aria-haspopup="true" aria-expanded="false"><span id="empNameHolder" class="text-shadow"><i class="fas fa-chevron-down"></i>' . $_SESSION['empName'] . '</span>
                     
                 </a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -54,7 +50,7 @@ session_start();
             echo '<div class="navbar-collapse">
 			<div class="" id="navbarNavDropdown">
 				<ul class="navbar-nav">
-					<li class="nav-item dropdown">
+					<li id="navEmpConfig" class="nav-item dropdown">
 						<a class="nav-link" href="signIn.php" id="navbarDropdownMenuLink">Sign in</a>
 
 					</li>
@@ -73,9 +69,9 @@ session_start();
         if (isset($_SESSION['isSignedIn']) AND $_SESSION['isSignedIn'] === TRUE) {
             echo '<ul class="list-unstyled components">
 			<li>
-				<a href="#safetySubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle collapsed">Training
-					Required <span class="badge badge-danger">3</span></a>
-				<ul class="list-unstyled collapse" id="safetySubmenu" style="">
+				<a href="#requiredTrainingSubmenu" id="requiredTrainingMenu" class="text-shadow text-uppercase" data-toggle="collapse" aria-expanded="true"class="dropdown-toggle collapsed">Training
+					Required <span class="badge badge-danger">3</span><i class="fas fa-chevron-circle-up"></i></a>
+				<ul class="list-unstyled collapse show" id="requiredTrainingSubmenu" style="">
 					<li>
 						<a href="backSafety.php">Back Safety</a>
 					</li>
@@ -88,9 +84,9 @@ session_start();
 				</ul>
 			</li>
 			<li>
-				<a href="#workplaceSubmenu" data-toggle="collapse" aria-expanded="false"
-				   class="dropdown-toggle collapsed">Training Completed</a>
-				<ul class="list-unstyled collapse" id="workplaceSubmenu" style="">
+				<a href="#completedTrainingSubmenu" id="completedTrainingMenu" class="text-shadow text-uppercase" data-toggle="collapse" aria-expanded="false"
+				   class="dropdown-toggle collapsed">Training Completed<i class="fas fa-chevron-circle-down"></i></a>
+				<ul class="list-unstyled collapse" id="completedTrainingSubmenu" style="">
 					<li>
 						<a href="#">Completed Training #1</a>
 					</li>
@@ -112,12 +108,12 @@ session_start();
 	<!-- Page Content Holder -->
 	<div id="content">
 <!--		<button type="button" id="sidebarCollapse" class="btn btn-info">-->
-<!--			<i class="fas fa-align-left"></i>-->
+<!--			<i class="fas fa-align-left text-shadow"></i>-->
 <!--		</button>-->
 		<div id="videoContainer">
 			<h2>National Safety Compliance - <span id="videoLength"></span></h2>
 			<h4>Back Safety</h4>
-			<video id="my-video" class="video-js vjs-fluid" controls preload="auto"
+			<video id="trainingVideo" class="video-js vjs-fluid" controls preload="auto"
 				   poster="img/poster.jpg" data-setup="{}">
 				<source src="videos/backSafety.mp4" type='video/mp4'>
 				<source src="videos/backSafety.mp4" type='video/webm'>
@@ -144,7 +140,7 @@ session_start();
 				anim id est laborum.</p>
 			<div class="row">
 				<div class="col-md-12 text-right"><a href="completed.php">
-						<button id="completedBtn" type="button" class="btn btn-primary btn-lg" disabled>Mark Completed</button>
+						<button id="completedBtn" type="button" class="btn btn-primary btn-lg text-shadow" disabled>Mark Completed</button>
 					</a></div>
 			</div>
 			<div class="line"></div>
@@ -173,7 +169,7 @@ session_start();
 <script>
 
     $(document).ready(function () {
-        var player = videojs('my-video');
+        const player = videojs('trainingVideo');
 
 
         if (player.readyState() < 1) {
@@ -187,10 +183,10 @@ session_start();
         }
 
         function onLoadedMetadata() {
-            var sec = player.duration();
-            var hours = Math.floor(sec / 3600);
-            var min = Math.floor((sec - (hours * 3600)) / 60);
-            var seconds = Math.floor(sec % 60);
+            const sec = player.duration();
+            const hours = Math.floor(sec / 3600);
+            const min = Math.floor((sec - (hours * 3600)) / 60);
+            const seconds = Math.floor(sec % 60);
 
             $("#videoLength").html(hours + ':' + min + ':' + seconds);
         }
@@ -199,5 +195,6 @@ session_start();
 </script>
 <script src="js/initials.js"></script>
 <script src="js/videoEnded.js"></script>
+<script src="js/chevronHandler.js"></script>
 </body>
 </html>

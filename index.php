@@ -43,16 +43,16 @@ if ($conn === false) {
 	<link rel="stylesheet" href="css/master.css">
 	<script src="js/jquery3.3.1.min.js"></script>
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
-
+	<link href="https://fonts.googleapis.com/css?family=Merriweather+Sans" rel="stylesheet">
 
 </head>
 
-<body data-gr-c-s-loaded="true">
+<body>
 
 <div class="wrapper">
 	<nav id="topbar" class="navbar navbar-expand">
 		<button type="button" id="sidebarCollapse" class="btn btn-info" onclick="this.blur();">
-			<i class="fas fa-align-left"></i>
+			<i class="fas fa-align-left text-shadow"></i>
 		</button>
         <?php
         if (isset($_SESSION['isSignedIn']) AND $_SESSION['isSignedIn'] === TRUE) {
@@ -63,9 +63,9 @@ if ($conn === false) {
 			</button>
 			<div class="" id="navbarNavDropdown">
 				<ul class="navbar-nav">
-					<li class="nav-item dropdown">
+					<li id="navEmpConfig" class="nav-item dropdown">
 						<a class="nav-link " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-						   aria-haspopup="true" aria-expanded="false"><div id="initialHolder"></div><span id="empNameHolder">' . $_SESSION['empName'] . '</span>
+						   aria-haspopup="true" aria-expanded="false"><span id="empNameHolder" class="text-shadow"><i class="fas fa-chevron-down"></i>' . $_SESSION['empName'] . '</span>
                     
                 </a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -80,7 +80,7 @@ if ($conn === false) {
             echo '<div class="navbar-collapse">
 			<div class="" id="navbarNavDropdown">
 				<ul class="navbar-nav">
-					<li class="nav-item dropdown">
+					<li id="navEmpConfig" class="nav-item dropdown">
 						<a class="nav-link" href="signIn.php" id="navbarDropdownMenuLink">Sign in</a>
 
 					</li>
@@ -99,9 +99,9 @@ if ($conn === false) {
         if (isset($_SESSION['isSignedIn']) AND $_SESSION['isSignedIn'] === TRUE) {
             echo '<ul class="list-unstyled components">
 			<li>
-				<a href="#safetySubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle collapsed">Training
-					Required <span class="badge badge-danger">3</span></a>
-				<ul class="list-unstyled collapse" id="safetySubmenu" style="">
+				<a href="#requiredTrainingSubmenu" id="requiredTrainingMenu" class="text-shadow text-uppercase" data-toggle="collapse" aria-expanded="true"class="dropdown-toggle">Training
+					Required <span class="badge badge-danger">3</span><i class="fas fa-chevron-circle-up"></i></a>
+				<ul class="list-unstyled collapse show" id="requiredTrainingSubmenu" style="">
 					<li>
 						<a href="backSafety.php">Back Safety</a>
 					</li>
@@ -114,9 +114,9 @@ if ($conn === false) {
 				</ul>
 			</li>
 			<li>
-				<a href="#workplaceSubmenu" data-toggle="collapse" aria-expanded="false"
-				   class="dropdown-toggle collapsed">Training Completed</a>
-				<ul class="list-unstyled collapse" id="workplaceSubmenu" style="">
+				<a href="#completedTrainingSubmenu" id="completedTrainingMenu" class="text-shadow text-uppercase" data-toggle="collapse" aria-expanded="false"
+				   class="dropdown-toggle collapsed">Training Completed<i class="fas fa-chevron-circle-down"></i></a>
+				<ul class="list-unstyled collapse" id="completedTrainingSubmenu" style="">
 					<li>
 						<a href="#">Completed Training #1</a>
 					</li>
@@ -139,11 +139,14 @@ if ($conn === false) {
 	<div id="content">
         <?php
         if (isset($_SESSION['isSignedIn']) AND $_SESSION['isSignedIn'] === TRUE) {
-            echo '<h1 class="text-center">Hi <span class="variableHolder">'.$_SESSION['empFirstName'].'</span>, you have
-		training to complete.</h1>
-		<div id="contentContainer" class="text-center row">
+            echo '
+		<div id="contentContainer" class="text-center ">
+		<div id="cardHolder" class="text-center row box-shadow border-top-blue">
+		<div class="col-md-12"><h1 id="welcomeText" class="text-center"><span id="greeting"></span><span class="variableHolder"> ' . $_SESSION['empFirstName'] . '</span>!</h1>
+		<p class="lead">You have training to complete.</p>
+		</div>
 			<div class="col-lg-6">
-				<div class="card border-danger">
+				<div id="requiredTrainingCard" class="card border-top-danger box-shadow">
 					<div class="card-header">
 						Training Required
 					</div>
@@ -155,12 +158,12 @@ if ($conn === false) {
 								<li class="list-group-item"><a href="hazComChemicalLabels.php">Hazard Communication Chemical Labels - 13:47</a></li>
 							</ul>
 						</div>
-						<a href="backSafety.php" class="btn btn-danger">Go to training</a>
+						<a href="backSafety.php" class="btn btn-danger text-shadow">Go to training</a>
 					</div>
 				</div>
 			</div>
 			<div class="col-lg-6">
-				<div class="card border-success">
+				<div id="completedTrainingCard" class="card border-top-success box-shadow">
 					<div class="card-header">
 						Training Completed
 					</div>
@@ -172,17 +175,18 @@ if ($conn === false) {
 								<li class="list-group-item"><a href="#">Completed Training #3 - 29:11</a></li>
 							</ul>
 						</div>
-						<a href="#" class="btn btn-success">Go to completed</a>
+						<a href="#" class="btn btn-success text-shadow">Go to completed</a>
 					</div>
 				</div>
+			</div>
 			</div>';
-		} elseif (!isset($_SESSION['isSignedIn']) OR $_SESSION['isSignedIn'] === FALSE) {
+        } elseif (!isset($_SESSION['isSignedIn']) OR $_SESSION['isSignedIn'] === FALSE) {
             echo '';
         }
         ?>
 	</div>
 </div>
-</div>
+
 
 <!-- jQuery CDN - Slim version (=without AJAX) -->
 
@@ -196,5 +200,7 @@ if ($conn === false) {
 		crossorigin="anonymous"></script>
 <script src="js/sidebarToggle.js"></script>
 <script src="js/initials.js"></script>
+<script src="js/chevronHandler.js"></script>
+<script src="js/greetings.js"></script>
 </body>
 </html>

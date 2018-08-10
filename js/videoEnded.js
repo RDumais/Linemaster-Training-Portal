@@ -1,4 +1,4 @@
-var video = videojs('my-video').ready(function(){
+var video = videojs('trainingVideo').ready(function(){
     var player = this;
 
     player.on('ended', function() {

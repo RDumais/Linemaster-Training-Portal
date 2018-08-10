@@ -398,7 +398,7 @@
     registerPlugin('hotkeys', hotkeys);
 }));
 
-videojs('my-video').ready(function() {
+videojs('trainingVideo').ready(function() {
     this.hotkeys({
         volumeStep: 0.1,
         seekStep: 5,
