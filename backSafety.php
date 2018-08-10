@@ -1,35 +1,6 @@
 <?php
-
-if (!isset($_SESSION)) {
-    //If any errors arise display them
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
-
-//Start the session for the visitor
-    session_name("EmployeeOnboardingPortal");
-    session_start();
-
-//Accessing an external file for database connection
-    require('../../php/connect.php');
-
-//If unable to connect to database
-    if ($conn === false) {
-        echo "Could not connect.\n";
-        die(print_r(sqlsrv_errors(), true));
-    }
-
-//Reformat the name from the original database table, gather results
-    $getEmpNumSTMT = "SELECT DISTINCT
-					   emp_num
-						FROM employee_mst
-						WHERE term_date IS NULL AND hire_date IS NOT NULL
-						ORDER BY emp_num ASC
-";
-    $getEmpNumEXEC = sqlsrv_query($conn, $getEmpNumSTMT);
-}
-
-
+session_name("EmployeeOnboardingPortal");
+session_start();
 ?>
 
 <html>
@@ -37,17 +8,13 @@ if (!isset($_SESSION)) {
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-
 	<title>Linemaster Video Training</title>
 	<link rel="icon" type="image/x-icon" href="img/favicon.ico">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
 		  integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://vjs.zencdn.net/7.1.0/video-js.css">
 	<link rel="stylesheet" href="css/master.css">
-	<script src="js/jquery3.3.1.min.js"></script>
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
-
-
 </head>
 
 <body>
@@ -85,6 +52,7 @@ if (!isset($_SESSION)) {
 				<ul class="navbar-nav">
 					<li id="navEmpConfig" class="nav-item dropdown">
 						<a class="nav-link" href="signIn.php" id="navbarDropdownMenuLink">Sign in</a>
+
 					</li>
 				</ul>
 			</div>
@@ -92,7 +60,6 @@ if (!isset($_SESSION)) {
         }
         ?>
 	</nav>
-	<!-- Sidebar Holder -->
 	<nav id="sidebar" class="">
 		<div class="sidebar-header text-center">
 			<a href="index.php"><img id="mainLogo" src="img/linemasterwhite.png" alt=""></a>
@@ -140,36 +107,44 @@ if (!isset($_SESSION)) {
 
 	<!-- Page Content Holder -->
 	<div id="content">
-		<div id="contentContainer" class="text-center">
-			<form id="signInForm" method="post" action="php/submitEmployee.php" class="box-shadow border-top-blue">
+<!--		<button type="button" id="sidebarCollapse" class="btn btn-info">-->
+<!--			<i class="fas fa-align-left text-shadow"></i>-->
+<!--		</button>-->
+		<div id="videoContainer">
+			<h2>National Safety Compliance - <span id="videoLength"></span></h2>
+			<h4>Back Safety</h4>
+			<video id="trainingVideo" class="video-js vjs-fluid" controls preload="auto"
+				   poster="img/poster.jpg" data-setup="{}">
+				<source src="videos/backSafety.mp4" type='video/mp4'>
+				<source src="videos/backSafety.mp4" type='video/webm'>
+				<p class="vjs-no-js">
+					To view this video please enable JavaScript, and consider upgrading to a web browser that
+					<a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+				</p>
+			</video>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+				dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+				ex
+				ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+				fugiat
+				nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+				mollit
+				anim id est laborum.</p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+				dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+				ex
+				ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+				fugiat
+				nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+				mollit
+				anim id est laborum.</p>
+			<div class="row">
+				<div class="col-md-12 text-right"><a href="completed.php">
+						<button id="completedBtn" type="button" class="btn btn-primary btn-lg text-shadow" disabled>Mark Completed</button>
+					</a></div>
+			</div>
+			<div class="line"></div>
 
-				<div class="form-row">
-					<div class="col-6 text-left">
-						<label for="empNum" id="empNumLabel">Employee Number</label>
-						<select id="empNum" class="form-control" name="empNum" tabindex="1">
-							<option></option>
-                            <?php
-
-                            //Populate drop-down with reasons to visit Linemaster
-                            while ($row = sqlsrv_fetch_array($getEmpNumEXEC, SQLSRV_FETCH_ASSOC)) {
-                                echo "<option>" . $row['emp_num'] . "</option>";
-                            }
-                            ?>
-						</select>
-					</div>
-					<div class="col-6 text-left">
-						<label id="empPinLabel" for="empPin" class="">Employee Pin</label>
-						<input type="password" class="form-control" name="empPin" id="empPin" minlength="4"
-							   maxlength="4" size="4" tabindex="2">
-					</div>
-				</div>
-				<div id="employeeConfirmation">
-
-				</div>
-				<button id="submitEmpNum" class="btn btn-info" disabled>
-					<span>Sign in</span>
-				</button>
-			</form>
 		</div>
 
 
@@ -177,7 +152,9 @@ if (!isset($_SESSION)) {
 </div>
 
 <!-- jQuery CDN - Slim version (=without AJAX) -->
-
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
 <!-- Popper.JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
 		integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
@@ -186,52 +163,38 @@ if (!isset($_SESSION)) {
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
 		integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
 		crossorigin="anonymous"></script>
+<script src="https://vjs.zencdn.net/7.1.0/video.js"></script>
+<script src="js/videoHotkeys.js"></script>
 <script src="js/sidebarToggle.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <script>
 
-    //Listen for keyups to tell if the visitor is finished typing
-    let typingTimer;
-    const doneTypingInterval = 1000;
+    $(document).ready(function () {
+        const player = videojs('trainingVideo');
 
-    $('#empPin').keyup(function () {
-        clearTimeout(typingTimer);
-        if ($('#empPin').val()) {
-            typingTimer = setTimeout(findEmployee, doneTypingInterval);
+
+        if (player.readyState() < 1) {
+            // do not have metadata yet so loadedmetadata event not fired yet (I presume)
+            // wait for loadedmetdata event
+            player.one("loadedmetadata", onLoadedMetadata);
+        }
+        else {
+            // metadata already loaded
+            onLoadedMetadata();
+        }
+
+        function onLoadedMetadata() {
+            const sec = player.duration();
+            const hours = Math.floor(sec / 3600);
+            const min = Math.floor((sec - (hours * 3600)) / 60);
+            const seconds = Math.floor(sec % 60);
+
+            $("#videoLength").html(hours + ':' + min + ':' + seconds);
         }
     });
 
-    //Make AJAX call to see if the visitor previously visited, if not prompt the visitor to sign in
-    function findEmployee() {
-
-        const empNum = $('.select2-selection__rendered').text();
-        $.ajax({
-            type: "POST",
-            url: "php/findEmployee.php",
-            data: {
-                'empNum': empNum
-            },
-            success: function (data) {
-                $("#employeeConfirmation").html(data);
-                if ($("#empNum").val().length > 0 ) {
-                    $("#submitEmpNum").removeAttr('disabled');
-                }
-            }
-        });
-
-    }
-
-    //Set placeholder text for dynamic drop-downs
-    $(document).ready(function () {
-        $('#empNum').select2({});
-    });
 </script>
-<script>  $(document).ready(function () {
-        $("#empNum").select2({
-            selectOnClose: true
-        });
-    });</script>
 <script src="js/initials.js"></script>
+<script src="js/videoEnded.js"></script>
 <script src="js/chevronHandler.js"></script>
 </body>
 </html>

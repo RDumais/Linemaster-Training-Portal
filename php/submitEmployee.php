@@ -10,6 +10,7 @@
 
 
 //Start the session for the visitor
+session_name("EmployeeOnboardingPortal");
 session_start();
 
 //If any errors arise display them

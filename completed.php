@@ -1,32 +1,29 @@
 <?php
-
-if (!isset($_SESSION)) {
-    //If any errors arise display them
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
-
 //Start the session for the visitor
-    session_name("EmployeeOnboardingPortal");
-    session_start();
+session_name("EmployeeOnboardingPortal");
+session_start();
+
+if (!isset($_SESSION['isSignedIn']) OR $_SESSION['isSignedIn'] === FALSE) {
+    header("Location: signIn.php"); /* Redirect browser */
+
+    /* Make sure that code below does not get executed when we redirect. */
+    exit;
+}
+
+
+//If any errors arise display them
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 
 //Accessing an external file for database connection
-    require('../../php/connect.php');
+require('../../php/connect.php');
 
 //If unable to connect to database
-    if ($conn === false) {
-        echo "Could not connect.\n";
-        die(print_r(sqlsrv_errors(), true));
-    }
-
-//Reformat the name from the original database table, gather results
-    $getEmpNumSTMT = "SELECT DISTINCT
-					   emp_num
-						FROM employee_mst
-						WHERE term_date IS NULL AND hire_date IS NOT NULL
-						ORDER BY emp_num ASC
-";
-    $getEmpNumEXEC = sqlsrv_query($conn, $getEmpNumSTMT);
+if ($conn === false) {
+    echo "Could not connect.\n";
+    die(print_r(sqlsrv_errors(), true));
 }
 
 
@@ -46,7 +43,7 @@ if (!isset($_SESSION)) {
 	<link rel="stylesheet" href="css/master.css">
 	<script src="js/jquery3.3.1.min.js"></script>
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
-
+	<link rel="stylesheet" href="css/alertify.min.css">
 
 </head>
 
@@ -85,6 +82,7 @@ if (!isset($_SESSION)) {
 				<ul class="navbar-nav">
 					<li id="navEmpConfig" class="nav-item dropdown">
 						<a class="nav-link" href="signIn.php" id="navbarDropdownMenuLink">Sign in</a>
+
 					</li>
 				</ul>
 			</div>
@@ -92,7 +90,6 @@ if (!isset($_SESSION)) {
         }
         ?>
 	</nav>
-	<!-- Sidebar Holder -->
 	<nav id="sidebar" class="">
 		<div class="sidebar-header text-center">
 			<a href="index.php"><img id="mainLogo" src="img/linemasterwhite.png" alt=""></a>
@@ -103,11 +100,8 @@ if (!isset($_SESSION)) {
             echo '<ul class="list-unstyled components">
 			<li>
 				<a href="#requiredTrainingSubmenu" id="requiredTrainingMenu" class="text-shadow text-uppercase" data-toggle="collapse" aria-expanded="true"class="dropdown-toggle collapsed">Training
-					Required <span class="badge badge-danger">3</span><i class="fas fa-chevron-circle-up"></i></a>
+					Required <span class="badge badge-danger">2</span></a>
 				<ul class="list-unstyled collapse show" id="requiredTrainingSubmenu" style="">
-					<li>
-						<a href="backSafety.php">Back Safety</a>
-					</li>
 					<li>
 						<a href="prevSexHarassForEmps.php">Preventing Sexual Harassment</a>
 					</li>
@@ -140,41 +134,56 @@ if (!isset($_SESSION)) {
 
 	<!-- Page Content Holder -->
 	<div id="content">
+        <?php
+        if (isset($_SESSION['isSignedIn']) AND $_SESSION['isSignedIn'] === TRUE) {
+            echo '
 		<div id="contentContainer" class="text-center">
-			<form id="signInForm" method="post" action="php/submitEmployee.php" class="box-shadow border-top-blue">
-
-				<div class="form-row">
-					<div class="col-6 text-left">
-						<label for="empNum" id="empNumLabel">Employee Number</label>
-						<select id="empNum" class="form-control" name="empNum" tabindex="1">
-							<option></option>
-                            <?php
-
-                            //Populate drop-down with reasons to visit Linemaster
-                            while ($row = sqlsrv_fetch_array($getEmpNumEXEC, SQLSRV_FETCH_ASSOC)) {
-                                echo "<option>" . $row['emp_num'] . "</option>";
-                            }
-                            ?>
-						</select>
-					</div>
-					<div class="col-6 text-left">
-						<label id="empPinLabel" for="empPin" class="">Employee Pin</label>
-						<input type="password" class="form-control" name="empPin" id="empPin" minlength="4"
-							   maxlength="4" size="4" tabindex="2">
-					</div>
-				</div>
-				<div id="employeeConfirmation">
-
-				</div>
-				<button id="submitEmpNum" class="btn btn-info" disabled>
-					<span>Sign in</span>
-				</button>
-			</form>
+		<div id="cardHolder" class="text-center row box-shadow border-top-blue">
+		<div class="col-md-12"><h1 id="welcomeText" class="text-center"><span id="greeting"></span><span class="variableHolder"> ' . $_SESSION['empFirstName'] . '</span>!</h1>
+		<p class="lead">You have training to complete.</p>
 		</div>
-
-
+		<div class="col-lg-6">
+				<div id="requiredTrainingCard" class="card border-top-danger box-shadow">
+					<div class="card-header">
+						Training Required
+					</div>
+					<div class="card-body">
+						<div class="card">
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item"><a href="prevSexHarassForEmps.php">Preventing Sexual Harassment for Employees - 15:36</a></li>
+								<li class="list-group-item"><a href="hazComChemicalLabels.php">Hazard Communication Chemical Labels - 13:47</a></li>
+							</ul>
+						</div>
+						<a href="backSafety.php" class="btn btn-danger text-shadow">Go to training</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<div id="completedTrainingCard" class="card border-top-success box-shadow">
+					<div class="card-header">
+						Training Completed
+					</div>
+					<div class="card-body">
+						<div class="card">
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item"><a href="#">Completed Training #1 - 0:11:22</a></li>
+								<li class="list-group-item"><a href="#">Completed Training #2 - 0:17:39</a></li>
+								<li class="list-group-item"><a href="#">Completed Training #3 - 0:29:11</a></li>
+								<li id="newestCompleted" class="list-group-item"><a href="backSafety.php">Back Safety - 12:31</a></li>
+							</ul>
+						</div>
+						<a href="#" class="btn btn-success text-shadow">Go to completed</a>
+					</div>
+				</div>
+			</div>
+			</div>';
+        } elseif (!isset($_SESSION['isSignedIn']) OR $_SESSION['isSignedIn'] === FALSE) {
+            echo '';
+        }
+        ?>
 	</div>
 </div>
+
 
 <!-- jQuery CDN - Slim version (=without AJAX) -->
 
@@ -187,51 +196,18 @@ if (!isset($_SESSION)) {
 		integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
 		crossorigin="anonymous"></script>
 <script src="js/sidebarToggle.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-<script>
-
-    //Listen for keyups to tell if the visitor is finished typing
-    let typingTimer;
-    const doneTypingInterval = 1000;
-
-    $('#empPin').keyup(function () {
-        clearTimeout(typingTimer);
-        if ($('#empPin').val()) {
-            typingTimer = setTimeout(findEmployee, doneTypingInterval);
-        }
-    });
-
-    //Make AJAX call to see if the visitor previously visited, if not prompt the visitor to sign in
-    function findEmployee() {
-
-        const empNum = $('.select2-selection__rendered').text();
-        $.ajax({
-            type: "POST",
-            url: "php/findEmployee.php",
-            data: {
-                'empNum': empNum
-            },
-            success: function (data) {
-                $("#employeeConfirmation").html(data);
-                if ($("#empNum").val().length > 0 ) {
-                    $("#submitEmpNum").removeAttr('disabled');
-                }
-            }
-        });
-
-    }
-
-    //Set placeholder text for dynamic drop-downs
-    $(document).ready(function () {
-        $('#empNum').select2({});
-    });
-</script>
-<script>  $(document).ready(function () {
-        $("#empNum").select2({
-            selectOnClose: true
-        });
-    });</script>
 <script src="js/initials.js"></script>
+<script>
+    const glower = $('#newestCompleted');
+    window.setTimeout(function () {
+        glower.toggleClass('highlight');
+    }, 200);
+
+    window.setTimeout(function () {
+        glower.toggleClass('highlight');
+    }, 1500);</script>
 <script src="js/chevronHandler.js"></script>
+<script src="js/alertify.min.js"></script>
+<script src="js/greetings.js"></script>
 </body>
 </html>
